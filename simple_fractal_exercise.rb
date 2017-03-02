@@ -1,5 +1,6 @@
 require 'pry'
 require 'csv'
+require_relative 'movie'
 
 user = {
     "id": 12,
@@ -7,8 +8,11 @@ user = {
     "favorite_genres": "Action|Sci-Fi"
 }
 
-CSV.foreach('./movie_metadata.csv') do |row|
+CSV.foreach('./movie_metadata.csv', :headers=>true) do |row|
+  Movie.new(row["movie_imdb_link"].split("/")[4], row["imdb_score"], row["title_year"], row["genres"].split("|"))
 end
+
+binding.pry
 
 # def get_score(movie_title_id)
 #
