@@ -1,6 +1,5 @@
 class Movie
   attr_accessor :title_id, :imdb_score, :release_year, :genres
-
   @@all = []
 
   def initialize(title_id, imdb_score, release_year, genres)
@@ -25,19 +24,18 @@ class Movie
     self.all.find {|movie| movie.title_id == id}
   end
 
-  def self.get_score(id)
-    self.find(id).fractal_score
-  end
-
-  def self.get_user_score(id, user_hash)
-    movie = self.find(id)
+  def get_user_score(user_hash)
     bonus = 0
-    if user_hash[:likes_old_movies] && movie.release_year < 1970
+    if user_hash[:likes_old_movies] && self.release_year < 1970
       bonus += 2.5
     end
-    if !(user_hash[:favorite_genres].split("|") & movie.genres).empty?
+    if !(user_hash[:favorite_genres].split("|") & self.genres).empty?
       bonus += 3.5
     end
-    movie.fractal_score + bonus
+    self.fractal_score + bonus
+  end
+
+  def self.get_top_10_movies_for_user(user_hash)
+
   end
 end
