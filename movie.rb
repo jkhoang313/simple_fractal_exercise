@@ -1,9 +1,10 @@
 class Movie
-  attr_accessor :title_id, :imdb_score, :release_year, :genres
+  attr_accessor :title_id, :title, :imdb_score, :release_year, :genres
   @@all = []
 
-  def initialize(title_id, imdb_score, release_year, genres)
+  def initialize(title_id, title, imdb_score, release_year, genres)
     @title_id = title_id
+    @title = title.strip
     @imdb_score = imdb_score.to_f
     @release_year = release_year.to_f
     @genres = genres
@@ -36,6 +37,13 @@ class Movie
   end
 
   def self.get_top_10_movies_for_user(user_hash)
+    movies = self.all.map {|movie| {title: movie.title, score: movie.get_user_score(user_hash)}}
 
+    top_ten = movies.sort {|x, y| y[:score] <=> x[:score]}[0..9]
+
+    puts "Top 10 Recommended Movies"
+    top_ten.each.with_index(1) {|movie, index| puts "#{index}. #{movie[:title]} - #{movie[:score]}"}
+
+    top_ten
   end
 end

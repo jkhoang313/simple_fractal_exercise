@@ -1,4 +1,3 @@
-require 'pry'
 require 'csv'
 require_relative 'movie'
 
@@ -9,9 +8,8 @@ user = {
 }
 
 CSV.foreach('./movie_metadata.csv', :headers=>true) do |row|
-  Movie.new(row["movie_imdb_link"].split("/")[4], row["imdb_score"], row["title_year"], row["genres"].split("|"))
+  Movie.new(row["movie_imdb_link"].split("/")[4], row["movie_title"], row["imdb_score"], row["title_year"], row["genres"].split("|"))
 end
-
 
 def get_score(movie_title_id)
   Movie.find(movie_title_id).fractal_score
@@ -20,8 +18,9 @@ end
 def get_user_score(movie_title_id, user_hash)
   Movie.find(movie_title_id).get_user_score(user_hash)
 end
-binding.pry
-#
-# def get_top_10_movies_for_user(user_hash)
-#   Movie.get_top_10_movies_for_user(user_hash)
-# end
+
+def get_top_10_movies_for_user(user_hash)
+  Movie.get_top_10_movies_for_user(user_hash)
+end
+
+puts get_top_10_movies_for_user(user)
