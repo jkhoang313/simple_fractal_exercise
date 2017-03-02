@@ -12,12 +12,14 @@ CSV.foreach('./movie_metadata.csv', :headers=>true) do |row|
   Movie.new(row["movie_imdb_link"].split("/")[4], row["imdb_score"], row["title_year"], row["genres"].split("|"))
 end
 
+
+def get_score(movie_title_id)
+  selected_movie = Movie.all.find {|movie| movie.title_id == movie_title_id}
+  selected_movie.fractal_score
+end
+
 binding.pry
 
-# def get_score(movie_title_id)
-#
-# end
-#
 # def get_user_score(movie_title_id, user_hash)
 #
 # end
