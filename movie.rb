@@ -2,12 +2,10 @@ class Movie
   attr_accessor :title_id, :title, :imdb_score, :release_year, :genres
   @@all = []
 
-  def initialize(title_id, title, imdb_score, release_year, genres)
-    @title_id = title_id
-    @title = title.strip
-    @imdb_score = imdb_score.to_f
-    @release_year = release_year.to_f
-    @genres = genres
+  def initialize(attributes)
+    attributes.each do |key, value|
+      self.send("#{key}=", value)
+    end
     @@all << self
   end
 

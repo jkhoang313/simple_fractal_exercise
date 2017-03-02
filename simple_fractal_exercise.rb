@@ -1,6 +1,6 @@
 require 'csv'
 require_relative 'movie'
-
+require 'pry'
 user = {
     "id": 12,
     "likes_old_movies": true,
@@ -8,7 +8,7 @@ user = {
 }
 
 CSV.foreach('./movie_metadata.csv', :headers=>true) do |row|
-  Movie.new(row["movie_imdb_link"].split("/")[4], row["movie_title"], row["imdb_score"], row["title_year"], row["genres"].split("|"))
+  Movie.new(title_id: row["movie_imdb_link"].split("/")[4], title: row["movie_title"].strip, imdb_score: row["imdb_score"].to_f, release_year: row["title_year"].to_f, genres: row["genres"].split("|"))
 end
 
 def get_score(movie_title_id)
@@ -23,4 +23,4 @@ def get_top_10_movies_for_user(user_hash)
   Movie.get_top_10_movies_for_user(user_hash)
 end
 
-puts get_top_10_movies_for_user(user)
+get_top_10_movies_for_user(user)
