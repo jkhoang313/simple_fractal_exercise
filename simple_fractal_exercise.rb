@@ -14,16 +14,13 @@ end
 
 
 def get_score(movie_title_id)
-  selected_movie = Movie.all.find {|movie| movie.title_id == movie_title_id}
-  selected_movie.fractal_score
+  Movie.get_score(movie_title_id)
 end
 
-binding.pry
+def get_user_score(movie_title_id, user_hash)
+  Movie.get_user_score(movie_title_id, user_hash)
+end
 
-# def get_user_score(movie_title_id, user_hash)
-#
-# end
-#
 # def get_top_10_movies_for_user(user_hash)
 #
 # end
